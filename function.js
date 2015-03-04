@@ -41,7 +41,7 @@
 			var settings = $.extend ( {
 				left: Math.floor( Math.random() * maxWidth),
 				top: Math.floor( Math.random()* maxHeight)
-			}, options);
+			});
 		
 			$(this).css({
 				left:settings.left,
