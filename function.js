@@ -20,37 +20,28 @@
 */
 
  (function ( $ ) {
-	$.fn.initialPosition = function(options) {
+	$.fn.gameSettings = function() {
 		var gamespaceHeight = $('.game-space').height();
 		var gamespaceWidth=  $('.game-space').width();
 		var squareHeight=  $('.square').height();
 		var squareWidth=  $('.square').width();
 		var maxHeight= gamespaceHeight - squareHeight;
 		var maxWidth= gamespaceWidth - squareWidth;
-		var settings = $.extend ( {
-			left: Math.floor( Math.random() * maxWidth),
-			top: Math.floor( Math.random()* maxHeight)
-		}, options)
-
-		this.css({
-			left:settings.left,
-			top:settings.top
-		});
-
-		this.click(function(){
-			var settings = $.extend ( {
+		
+		var randomPosition = function() {
+			$(".square").css({
 				left: Math.floor( Math.random() * maxWidth),
 				top: Math.floor( Math.random()* maxHeight)
 			});
-		
-			$(this).css({
-				left:settings.left,
-				top:settings.top
-			});
+		};
+		randomPosition();
+
+		$(".square").click(function(){
+			randomPosition();
 		});
 	};
 }(jQuery));
-	$(".square").initialPosition ();
+	$(".square").gameSettings();
 
 
 
