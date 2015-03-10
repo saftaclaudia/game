@@ -1,47 +1,56 @@
- /*$(document).ready(function() {
-	var gamespaceHeight = $('.game-space').height(),
-			gamespaceWidth = $('.game-space').width(),
-			squareHeight = $('.square').height(),
-			squareWidth = $('.square').width(),
-			maxHeight = gamespaceHeight - squareHeight,
-			maxWidth = gamespaceWidth - squareWidth;
-	var intialPosition = function(){
-		$('.square').css({
-			left: Math.floor( Math.random() * maxWidth),
-			top: Math.floor( Math.random()* maxHeight)
+(function ( $ ) {
+	$.fn.gameSettings = function(options) {
+		var $square = $('<div class = "square"></div>');
+		this.append($square);
+		var $score = $('<div class="display"> your score <span>0</span></div>');
+		this.append($score);
+
+		var settings = $.extend({
+			gamespaceHeight: this.height(),
+			gamespaceWidth: this.width(),
+			squareHeight: $square.height(),
+			squareWidth: $square.width()
+		}, options);
+	
+		var maxHeight= settings.gamespaceHeight - settings.squareHeight;
+		var maxWidth= settings.gamespaceWidth - settings.squareWidth;
+
+		$square.css({
+			height: settings.squareHeight, 
+			width: settings.squareWidth
 		});
-	};
-	intialPosition();
-
-	$(".square").click(function(){
-		intialPosition();
-	});
-}); 
-*/
-
- (function ( $ ) {
-	$.fn.gameSettings = function() {
-		var gamespaceHeight = $('.game-space').height();
-		var gamespaceWidth=  $('.game-space').width();
-		var squareHeight=  $('.square').height();
-		var squareWidth=  $('.square').width();
-		var maxHeight= gamespaceHeight - squareHeight;
-		var maxWidth= gamespaceWidth - squareWidth;
+		this.css({
+			height: settings.gamespaceHeight,
+			width: settings.gamespaceWidth
+		});
 		
 		var randomPosition = function() {
-			$(".square").css({
+			$square.css({
 				left: Math.floor( Math.random() * maxWidth),
 				top: Math.floor( Math.random()* maxHeight)
 			});
 		};
 		randomPosition();
 
-		$(".square").click(function(){
+		var getScore = function () {
+			$score.find('span').text();
+			var totalScore = parseInt( $score.find('span').text(), 10) + 1; 
+			$score.find('span').text(totalScore);
+		};
+
+		$square.click(function(){
 			randomPosition();
+			getScore();
 		});
 	};
 }(jQuery));
-	$(".square").gameSettings();
+
+	$(".game-space").gameSettings({
+		gamespaceHeight: 400,
+		gamespaceWidth: 500,
+		squareHeight: 50,
+		squareWidth: 50
+	});
 
 
 
