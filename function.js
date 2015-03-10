@@ -25,10 +25,10 @@
 		});
 		
 		var randomPosition = function() {
-			$square.css({
+			$square.animate({
 				left: Math.floor( Math.random() * maxWidth),
 				top: Math.floor( Math.random()* maxHeight)
-			});
+			}, 'slow');
 		};
 		randomPosition();
 
