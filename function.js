@@ -1,15 +1,22 @@
 (function ( $ ) {
 	$.fn.gameSettings = function(options) {
+		var maxsec = 10;
 		var $square = $('<div class = "square"></div>');
-		this.append($square);
+		var $display = $('<div class= " display-zone center-block"></div>');
 		var $score = $('<div class="display"> your score <span>0</span></div>');
-		this.append($score);
+		var $time = $('<div class="timekeep"> time left <span>'+maxsec+'</span></div>');
+		var $start = $('<button type="button" class="btn btn-primary btn-lg active start-button">Start</button>');
+		this.append($square);
+		this.before($display);
+		$display.append($start).append($time).append($score);
 
 		var settings = $.extend({
 			gamespaceHeight: this.height(),
 			gamespaceWidth: this.width(),
 			squareHeight: $square.height(),
-			squareWidth: $square.width()
+			squareWidth: $square.width(), 
+			displayHeight: $display.height(),
+			displayWidth: $display.width()
 		}, options);
 	
 		var maxHeight= settings.gamespaceHeight - settings.squareHeight;
@@ -23,7 +30,25 @@
 			height: settings.gamespaceHeight,
 			width: settings.gamespaceWidth
 		});
-		
+		$display.css({
+			height: settings.displayHeight,
+			width:settings.displayWidth
+		});
+
+		var sec = maxsec;
+
+		var decrement = function() {
+			setTimeout(function(){
+				if (sec ==  0 ){
+					$time.text("game over");
+				} else {
+					$time.find('span').text(sec);
+					sec = sec-1;
+					decrement();
+				}
+			}, 1000);
+		};
+	
 		var randomPosition = function() {
 			$square.animate({
 				left: Math.floor( Math.random() * maxWidth),
@@ -32,6 +57,12 @@
 		};
 		randomPosition();
 
+		$start.click(function(){
+			sec = maxsec;
+			$score.find('span').text(0);
+			decrement();
+		});
+		
 		var getScore = function () {
 			$score.find('span').text();
 			var totalScore = parseInt( $score.find('span').text(), 10) + 1; 
@@ -39,6 +70,7 @@
 		};
 
 		$square.click(function(){
+			sec = maxsec;
 			randomPosition();
 			getScore();
 		});
@@ -49,7 +81,9 @@
 		gamespaceHeight: 400,
 		gamespaceWidth: 500,
 		squareHeight: 50,
-		squareWidth: 50
+		squareWidth: 50, 
+		displayHeight:50,
+		displayWidth:500
 	});
 
 

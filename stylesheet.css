@@ -9,9 +9,25 @@
 	width: 500px;
 	height: 300px;
 	position: relative;
-	margin-top: 40px;
 }
 .display{
 	color: #6CBFE8;
-	margin: 20px 20px;
+	float: right;
+	margin-top: 10px;
+}
+.timekeep{
+	color: #6CBFE8;
+	float: left;
+	margin-top: 10px;
+}
+
+.display-zone{
+	width: 500px;
+	height: 50px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+.start-button {
+	float: left;
+	margin-right: 20px;
 }
