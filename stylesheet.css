@@ -14,11 +14,16 @@
 	color: #6CBFE8;
 	float: right;
 	margin-top: 10px;
+	width: 20%;
 }
 .timekeep{
 	color: #6CBFE8;
 	float: left;
-	margin-top: 10px;
+	width: 60%;
+	text-align: center;
+}
+.timekeep span{
+	font-size: 30px;
 }
 
 .display-zone{
@@ -29,5 +34,5 @@
 }
 .start-button {
 	float: left;
-	margin-right: 20px;
+	width: 20%;
 }

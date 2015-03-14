@@ -4,7 +4,7 @@
 		var $square = $('<div class = "square"></div>');
 		var $display = $('<div class= " display-zone center-block"></div>');
 		var $score = $('<div class="display"> your score <span>0</span></div>');
-		var $time = $('<div class="timekeep"> time left <span>'+maxsec+'</span></div>');
+		var $time = $('<div class="timekeep"> <span>'+maxsec+'</span></div>');
 		var $start = $('<button type="button" class="btn btn-primary btn-lg active start-button">Start</button>');
 		this.append($square);
 		this.before($display);
@@ -40,7 +40,7 @@
 		var decrement = function() {
 			setTimeout(function(){
 				if (sec ==  0 ){
-					$time.text("game over");
+					$time.find('span').text("game over");
 				} else {
 					$time.find('span').text(sec);
 					sec = sec-1;
@@ -57,22 +57,23 @@
 		};
 		randomPosition();
 
-		$start.click(function(){
-			sec = maxsec;
-			$score.find('span').text(0);
-			decrement();
-		});
-		
 		var getScore = function () {
 			$score.find('span').text();
 			var totalScore = parseInt( $score.find('span').text(), 10) + 1; 
 			$score.find('span').text(totalScore);
 		};
 
-		$square.click(function(){
+		$start.click(function(){
+			$score.find('span').text(0);
+			decrement();
+			if (sec > 0 ){
+				$square.click(function(){
+					sec = maxsec;
+					getScore();
+					randomPosition();
+				});
+			};
 			sec = maxsec;
-			randomPosition();
-			getScore();
 		});
 	};
 }(jQuery));
