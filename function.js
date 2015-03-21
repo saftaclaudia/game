@@ -2,7 +2,7 @@
 	$.fn.gameSettings = function(options) {
 		var maxsec = 10;
 		var $square = $('<div class = "square"></div>');
-		var $display = $('<div class= " display-zone center-block"></div>');
+		var $display = $('<div class= "display-zone center-block"></div>');
 		var $score = $('<div class="display"> your score <span>0</span></div>');
 		var $time = $('<div class="timekeep"> <span>'+maxsec+'</span></div>');
 		var $start = $('<button type="button" class="btn btn-primary btn-lg active start-button">Start</button>');
@@ -73,16 +73,21 @@
 			});
 		};
 
-		$start.one('click', function() {
+	var startGame = function () {
+		$start.on('click', function() {
 			$square.show();
 			randomPosition();
 			$score.find('span').text(0);
 			decrement();
 			gameActions();
 			sec = maxsec;
+			$start.off();
 		});
 	};
-	
+		startGame();
+
+	};
+
 }(jQuery));
 
 	$(".game-space").gameSettings({
