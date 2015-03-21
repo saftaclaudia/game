@@ -9,6 +9,7 @@
 		this.append($square);
 		this.before($display);
 		$display.append($start).append($time).append($score);
+		$square.hide();
 
 		var settings = $.extend({
 			gamespaceHeight: this.height(),
@@ -55,7 +56,6 @@
 				top: Math.floor( Math.random()* maxHeight)
 			}, 'slow');
 		};
-		randomPosition();
 
 		var getScore = function () {
 			$score.find('span').text();
@@ -63,19 +63,26 @@
 			$score.find('span').text(totalScore);
 		};
 
-		$start.click(function(){
-			$score.find('span').text(0);
-			decrement();
-			if (sec > 0 ){
+		var gameActions = function() {
 				$square.click(function(){
+				if (sec > 0 ){
 					sec = maxsec;
 					getScore();
 					randomPosition();
-				});
-			};
+				};
+			});
+		};
+
+		$start.one('click', function() {
+			$square.show();
+			randomPosition();
+			$score.find('span').text(0);
+			decrement();
+			gameActions();
 			sec = maxsec;
 		});
 	};
+	
 }(jQuery));
 
 	$(".game-space").gameSettings({
