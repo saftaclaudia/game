@@ -82,10 +82,10 @@
 			gameActions();
 			sec = maxsec;
 			$start.off();
+			$start.attr('disabled', 'disabled');
 		});
 	};
-		startGame();
-
+	startGame();
 	};
 
 }(jQuery));
