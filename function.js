@@ -1,6 +1,6 @@
 (function ( $ ) {
 	$.fn.gameSettings = function(options) {
-		var maxsec = 10;
+		var maxsec = 4;
 		var $square = $('<div class = "square"></div>');
 		var $display = $('<div class= "display-zone center-block"></div>');
 		var $score = $('<div class="display"> your score <span>0</span></div>');
@@ -16,8 +16,6 @@
 			gamespaceWidth: this.width(),
 			squareHeight: $square.height(),
 			squareWidth: $square.width(), 
-			displayHeight: $display.height(),
-			displayWidth: $display.width()
 		}, options);
 	
 		var maxHeight= settings.gamespaceHeight - settings.squareHeight;
@@ -31,17 +29,13 @@
 			height: settings.gamespaceHeight,
 			width: settings.gamespaceWidth
 		});
-		$display.css({
-			height: settings.displayHeight,
-			width:settings.displayWidth
-		});
 
 		var sec = maxsec;
 
 		var decrement = function() {
 			setTimeout(function(){
 				if (sec ==  0 ){
-					$time.find('span').text("game over");
+					gameOver();
 				} else {
 					$time.find('span').text(sec);
 					sec = sec-1;
@@ -50,42 +44,44 @@
 			}, 1000);
 		};
 	
-		var randomPosition = function() {
+		$start.on('click', startGame);
+		$square.on('click', gameActions);
+
+		function randomPosition() {
 			$square.animate({
 				left: Math.floor( Math.random() * maxWidth),
 				top: Math.floor( Math.random()* maxHeight)
 			}, 'slow');
 		};
 
-		var getScore = function () {
-			$score.find('span').text();
+		function getScore() {
 			var totalScore = parseInt( $score.find('span').text(), 10) + 1; 
 			$score.find('span').text(totalScore);
 		};
 
-		var gameActions = function() {
-				$square.click(function(){
-				if (sec > 0 ){
-					sec = maxsec;
-					getScore();
-					randomPosition();
-				};
-			});
+		function gameActions() {
+			if (sec > 0 ){
+				sec = maxsec;
+				getScore();
+				randomPosition();
+			};
 		};
 
-	var startGame = function () {
-		$start.on('click', function() {
+		function startGame() {
 			$square.show();
 			randomPosition();
 			$score.find('span').text(0);
 			decrement();
 			gameActions();
 			sec = maxsec;
-			$start.off();
 			$start.attr('disabled', 'disabled');
-		});
-	};
-	startGame();
+		};
+
+		function gameOver() {
+			$time.find('span').text("game over");
+			$square.hide();
+			$start.removeAttr('disabled');
+		};
 	};
 
 }(jQuery));
@@ -94,9 +90,7 @@
 		gamespaceHeight: 400,
 		gamespaceWidth: 500,
 		squareHeight: 50,
-		squareWidth: 50, 
-		displayHeight:50,
-		displayWidth:500
+		squareWidth: 50
 	});
 
 
