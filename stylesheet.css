@@ -13,13 +13,13 @@
 .display{
 	color: #6CBFE8;
 	float: right;
-	margin-top: 10px;
-	width: 20%;
+	width: 40%;
 }
+
 .timekeep{
 	color: #6CBFE8;
 	float: left;
-	width: 60%;
+	width: 40%;
 	text-align: center;
 }
 .timekeep span{

@@ -6,9 +6,10 @@
 		var $score = $('<div class="display"> your score <span>0</span></div>');
 		var $time = $('<div class="timekeep"> <span>'+maxsec+'</span></div>');
 		var $start = $('<button type="button" class="btn btn-primary btn-lg active start-button">Start</button>');
+		var $highestScore = $('<div class="display"> your highest score <span></span></div>');
 		this.append($square);
 		this.before($display);
-		$display.append($start).append($time).append($score);
+		$display.append($start).append($time).append($score).append($highestScore);
 		$square.hide();
 
 		var settings = $.extend({
@@ -85,7 +86,12 @@
 			$time.find('span').text("game over");
 			$square.hide();
 			$start.removeAttr('disabled');
+			var totalScore = getScore();
+			var currentScore = localStorage.getItem('totalScore');
+			localStorage.setItem('highestScore', currentScore.value);
+			$highestScore.find('span').text(currentScore);
 		};
+
 	};
 
 }(jQuery));
