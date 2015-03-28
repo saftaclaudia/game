@@ -53,16 +53,21 @@
 				top: Math.floor( Math.random()* maxHeight)
 			}, 'slow');
 		};
+		
+		function getScore(){
+			var totalScore= parseInt( $score.find('span').text(), 10);
+			return totalScore;
+		};
 
-		function getScore() {
-			var totalScore = parseInt( $score.find('span').text(), 10) + 1; 
+		function incrementScore() {
+			var totalScore= getScore() +1;
 			$score.find('span').text(totalScore);
 		};
 
 		function gameActions() {
 			if (sec > 0 ){
 				sec = maxsec;
-				getScore();
+				incrementScore();
 				randomPosition();
 			};
 		};
@@ -72,7 +77,6 @@
 			randomPosition();
 			$score.find('span').text(0);
 			decrement();
-			gameActions();
 			sec = maxsec;
 			$start.attr('disabled', 'disabled');
 		};
