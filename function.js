@@ -6,24 +6,28 @@
 		var $score = $('<div class="display"> your score <span>0</span></div>');
 		var $time = $('<div class="timekeep"> <span>'+maxsec+'</span></div>');
 		var $start = $('<button type="button" class="btn btn-primary btn-lg active start-button">Start</button>');
-		var $highestScore = $('<div class="display"> your highest score <span></span></div>');
+		var highestScore = getHighestScore();
+		var $highestScore = $('<div class="display"> your highest score <span>'+highestScore+'</span></div>');
+		var $maxscoremessage = $('<div class="message">highest score <span>'+highestScore+'</span></div>');
 		this.append($square);
+		this.append($maxscoremessage);
 		this.before($display);
 		$display.append($start).append($time).append($score).append($highestScore);
 		$square.hide();
-
+		$maxscoremessage.hide();
+		
 		var settings = $.extend({
 			gamespaceHeight: this.height(),
 			gamespaceWidth: this.width(),
 			squareHeight: $square.height(),
-			squareWidth: $square.width(), 
+			squareWidth: $square.width(),
 		}, options);
-	
+
 		var maxHeight= settings.gamespaceHeight - settings.squareHeight;
 		var maxWidth= settings.gamespaceWidth - settings.squareWidth;
 
 		$square.css({
-			height: settings.squareHeight, 
+			height: settings.squareHeight,
 			width: settings.squareWidth
 		});
 		this.css({
@@ -44,7 +48,7 @@
 				}
 			}, 1000);
 		};
-	
+
 		$start.on('click', startGame);
 		$square.on('click', gameActions);
 
@@ -54,7 +58,7 @@
 				top: Math.floor( Math.random()* maxHeight)
 			}, 'slow');
 		};
-		
+
 		function getScore(){
 			var totalScore= parseInt( $score.find('span').text(), 10);
 			return totalScore;
@@ -86,10 +90,23 @@
 			$time.find('span').text("game over");
 			$square.hide();
 			$start.removeAttr('disabled');
+
 			var totalScore = getScore();
-			var currentScore = localStorage.getItem('totalScore');
-			localStorage.setItem('highestScore', currentScore.value);
-			$highestScore.find('span').text(currentScore);
+			var highestScore = getHighestScore();
+
+			if (totalScore > highestScore) {
+				localStorage.setItem('highestScore', totalScore);
+				$highestScore.find('span').text(totalScore);
+				$maxscoremessage.show();
+			}
+		};
+
+		function getHighestScore() {
+			var result = localStorage.getItem('highestScore');
+			if(result == null) {
+				return 0;
+			}
+			return result;
 		};
 
 	};
@@ -102,7 +119,3 @@
 		squareHeight: 50,
 		squareWidth: 50
 	});
-
-
-
-
