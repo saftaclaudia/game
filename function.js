@@ -1,14 +1,15 @@
 (function ( $ ) {
 	$.fn.gameSettings = function(options) {
 		var maxsec = 4;
-		var $square = $('<div class = "square"></div>');
+		var $square = $('<div class = "square" ></div>');
 		var $display = $('<div class= "display-zone center-block"></div>');
 		var $score = $('<div class="display"> your score <span>0</span></div>');
 		var $time = $('<div class="timekeep"> <span>'+maxsec+'</span></div>');
 		var $start = $('<button type="button" class="btn btn-primary btn-lg active start-button">Start</button>');
 		var highestScore = getHighestScore();
+		console.log(highestScore);
 		var $highestScore = $('<div class="display"> your highest score <span>'+highestScore+'</span></div>');
-		var $maxscoremessage = $('<div class="message">highest score <span>'+highestScore+'</span></div>');
+		var $maxscoremessage = $('<div class="success message">highest score <span>'+highestScore+'</span></div>');
 		this.append($square);
 		this.append($maxscoremessage);
 		this.before($display);
@@ -39,14 +40,15 @@
 
 		var decrement = function() {
 			setTimeout(function(){
-				if (sec ==  0 ){
+				if (sec === 0 ){
 					gameOver();
 				} else {
-					$time.find('span').text(sec);
 					sec = sec-1;
+					$time.find('span').text(sec + 1);
 					decrement();
 				}
 			}, 1000);
+
 		};
 
 		$start.on('click', startGame);
@@ -59,17 +61,41 @@
 			}, 'slow');
 		};
 
+		var clicks=0;
+		function getClicks(){
+				clicks ++;
+		};
+		$square.on('click', getClicks);
+
 		function getScore(){
 			var totalScore= parseInt( $score.find('span').text(), 10);
 			return totalScore;
 		};
 
+		var squareWidth = $square.width();
+		var squareHeight = $square.height();
+		function decrementSize(){
+			if(clicks %2 == 0){
+				squareWidth--;
+				squareHeight--;
+			};
+			$square.css({
+				width: squareWidth,
+				height:squareHeight
+			});
+		};
+		$square.on('click', decrementSize);
+
 		function incrementScore() {
 			var totalScore= getScore() +1;
+			if(clicks %2 == 0){
+				totalScore++;
+			}
 			$score.find('span').text(totalScore);
 		};
 
 		function gameActions() {
+
 			if (sec > 0 ){
 				sec = maxsec;
 				incrementScore();
@@ -84,6 +110,7 @@
 			decrement();
 			sec = maxsec;
 			$start.attr('disabled', 'disabled');
+			$maxscoremessage.fadeOut("slow");
 		};
 
 		function gameOver() {
