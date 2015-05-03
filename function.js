@@ -69,7 +69,6 @@
 
 		function getScore(){
 			var totalScore= parseInt( $score.find('span').text(), 10);
-			
 			return totalScore;
 		};
 
@@ -87,14 +86,18 @@
 		};
 		$square.on('click', decrementSize);
 
-		function incrementScore() {
-			var score = 1;
-			if(clicks %2 == 0){
-				score++;
+		var score = 1;
+		function setScore(){
+			if (clicks%2 !=0 && clicks>2){
+				score++
 			};
+			console.log(score);
+		}
+		$square.on('click', setScore);
+
+		function incrementScore() {
 			var totalScore= getScore() +score;
 			$score.find('span').text(totalScore);
-			console.log(score);
 		};
 
 		function gameActions() {
