@@ -7,9 +7,9 @@
 		var $time = $('<div class="timekeep"> <span>'+maxsec+'</span></div>');
 		var $start = $('<button type="button" class="btn btn-primary btn-lg active start-button">Start</button>');
 		var highestScore = getHighestScore();
-		console.log(highestScore);
 		var $highestScore = $('<div class="display"> your highest score <span>'+highestScore+'</span></div>');
-		var $maxscoremessage = $('<div class="success message">highest score <span>'+highestScore+'</span></div>');
+		var $maxscoremessage = $('<div class="success message">awesome game </div>');
+
 		this.append($square);
 		this.append($maxscoremessage);
 		this.before($display);
@@ -48,11 +48,13 @@
 					decrement();
 				}
 			}, 1000);
-
 		};
 
 		$start.on('click', startGame);
 		$square.on('click', gameActions);
+		$square.on('click', getClicks);
+		$square.on('click', decrementSize);
+		$square.on('click', setScore);
 
 		function randomPosition() {
 			$square.animate({
@@ -61,47 +63,47 @@
 			}, 'slow');
 		};
 
-		var clicks=0;
+		var clicks= 0;
 		function getClicks(){
 				clicks ++;
 		};
-		$square.on('click', getClicks);
-
+		
 		function getScore(){
 			var totalScore= parseInt( $score.find('span').text(), 10);
 			return totalScore;
 		};
 
-		var squareWidth = $square.width();
-		var squareHeight = $square.height();
-		function decrementSize(){
-			if(clicks %2 == 0){
-				squareWidth--;
-				squareHeight--;
-			};
-			$square.css({
-				width: squareWidth,
-				height:squareHeight
-			});
-		};
-		$square.on('click', decrementSize);
-
 		var score = 1;
+
 		function setScore(){
 			if (clicks%2 !=0 && clicks>2){
 				score++
 			};
 			console.log(score);
-		}
-		$square.on('click', setScore);
+		};
 
 		function incrementScore() {
 			var totalScore= getScore() +score;
 			$score.find('span').text(totalScore);
 		};
 
-		function gameActions() {
+		var initialSquareWidth = $square.width();
+		var initialSquareHeight = $square.height();
+		var squareWidth = initialSquareWidth;
+		var squareHeight = initialSquareHeight;
 
+		function decrementSize(){
+			if(clicks %2 == 0){
+				squareWidth--;
+				squareHeight--;
+			};
+				$square.css({
+				width: squareWidth,
+				height:squareHeight
+			});
+		};
+		
+		function gameActions() {
 			if (sec > 0 ){
 				sec = maxsec;
 				incrementScore();
@@ -111,6 +113,12 @@
 
 		function startGame() {
 			$square.show();
+			clicks = 0;
+			score= 1;
+			$square.css({
+				width: initialSquareWidth,
+				height:initialSquareHeight
+			});
 			randomPosition();
 			$score.find('span').text(0);
 			decrement();
