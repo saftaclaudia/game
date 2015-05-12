@@ -73,11 +73,6 @@
 			clicks ++;
 		};
 
-		var clicksOut =0;
-		function getClicksOut(){
-			clicksOut ++;
-		};
-
 		function getScore(){
 			var totalScore= parseInt( $score.find('span').text(), 10);
 			return totalScore;
