@@ -9,6 +9,7 @@
 		var highestScore = getHighestScore();
 		var $highestScore = $('<div class="display"> your highest score <span>'+highestScore+'</span></div>');
 		var $maxscoremessage = $('<div class="success message">awesome game </div>');
+	
 
 		this.append($square);
 		this.append($maxscoremessage);
@@ -22,6 +23,7 @@
 			gamespaceWidth: this.width(),
 			squareHeight: $square.height(),
 			squareWidth: $square.width(),
+			decrementSquare:2,
 		}, options);
 
 		var maxHeight= settings.gamespaceHeight - settings.squareHeight;
@@ -55,6 +57,9 @@
 		$square.on('click', getClicks);
 		$square.on('click', decrementSize);
 		$square.on('click', setScore);
+		$square.on('click', incrementScore);
+		this.on('click', decrementScore);
+		
 
 		function randomPosition() {
 			$square.animate({
@@ -65,9 +70,14 @@
 
 		var clicks= 0;
 		function getClicks(){
-				clicks ++;
+			clicks ++;
 		};
-		
+
+		var clicksOut =0;
+		function getClicksOut(){
+			clicksOut ++;
+		};
+
 		function getScore(){
 			var totalScore= parseInt( $score.find('span').text(), 10);
 			return totalScore;
@@ -79,23 +89,25 @@
 			if (clicks%2 !=0 && clicks>2){
 				score++
 			};
-			console.log(score);
 		};
 
 		function incrementScore() {
 			var totalScore= getScore() +score;
 			$score.find('span').text(totalScore);
 		};
-
+		function decrementScore(){
+			var totalScore= getScore()-1;
+			$score.find('span').text(totalScore);
+		}
 		var initialSquareWidth = $square.width();
 		var initialSquareHeight = $square.height();
 		var squareWidth = initialSquareWidth;
 		var squareHeight = initialSquareHeight;
 
 		function decrementSize(){
-			if(clicks %2 == 0){
-				squareWidth--;
-				squareHeight--;
+			if(clicks%2 !=0 && clicks>2 && squareWidth>2){
+				squareWidth-=settings.decrementSquare;
+				squareHeight-=settings.decrementSquare;
 			};
 				$square.css({
 				width: squareWidth,
@@ -115,6 +127,9 @@
 			$square.show();
 			clicks = 0;
 			score= 1;
+			squareWidth = initialSquareWidth;
+			squareHeight = initialSquareHeight;
+
 			$square.css({
 				width: initialSquareWidth,
 				height:initialSquareHeight
@@ -158,5 +173,6 @@
 		gamespaceHeight: 400,
 		gamespaceWidth: 500,
 		squareHeight: 50,
-		squareWidth: 50
+		squareWidth: 50, 
+		decrementSquare:2
 	});

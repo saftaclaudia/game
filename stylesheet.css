@@ -24,7 +24,7 @@
      position: fixed;
      position: absolute;
      text-shadow: 0 1px 0 rgba(0,0,0,.5);
-     animation: animate-bg 5s linear infinite;
+     -webkit-animation: animate-bg 1s linear infinite;
 }
 
 .success{
@@ -32,7 +32,7 @@
      border-color: #55a12c;
 }
 
-@keyframes animate-bg {
+@-webkit-keyframes animate-bg {
     from {
         background-position: 0 0;
     }
