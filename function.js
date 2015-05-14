@@ -78,8 +78,8 @@
 
 		var clicksOut =0;
 		function getClicksOut (){
-			clicksOut++;
-			clicks=0;
+
+			clicksOut= clicksOut+1 +(clicks*0);
 			console.log(clicksOut);
 		}; 
 
