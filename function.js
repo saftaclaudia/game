@@ -58,7 +58,6 @@
 		$square.on('click', decrementSize);
 		$square.on('click', setScore);
 		$square.on('click', incrementScore);
-		$('.game-space').on('click', getClicksOut);
 		$('.game-space').on('click', setScoreDecrement);
 		$('.game-space').on('click', decrementScore);
 		
@@ -73,15 +72,7 @@
 		var clicks= 0;
 		function getClicks(){
 			clicks ++;
-			console.log(clicks);
 		};
-
-		var clicksOut =0;
-		function getClicksOut (){
-
-			clicksOut= clicksOut+1 +(clicks*0);
-			console.log(clicksOut);
-		}; 
 
 		function getScore(){
 			var totalScore= parseInt( $score.find('span').text(), 10);
@@ -96,12 +87,19 @@
 			};
 		};
 
-		var scoreDecrement = 1;
+		var scoreDecrement = 0;
 
 		function setScoreDecrement(){
-			if(clicksOut%2 ==0 && clicksOut>1){
-				scoreDecrement++;
+
+			if(squareWidth <40 && squareWidth>30){
+				scoreDecrement= 30;
 			};
+			if(squareWidth <30 && squareWidth>20){
+				scoreDecrement= 20;
+			}
+			if(squareWidth<20){
+				scoreDecrement= 10;
+			}
 			console.log(scoreDecrement);
 		};
 
@@ -111,7 +109,7 @@
 		};
 		function decrementScore(){
 			if (sec >0) {
-				var totalScore= getScore()-scoreDecrement;
+				var totalScore= getScore() -scoreDecrement;
 				$score.find('span').text(totalScore);
 			};
 		};
@@ -143,8 +141,7 @@
 			$square.show();
 			clicks = 0;
 			score= 1;
-			clicksOut =0;
-			scoreDecrement =1;
+			scoreDecrement=0;
 			squareWidth = initialSquareWidth;
 			squareHeight = initialSquareHeight;
 
