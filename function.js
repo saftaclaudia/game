@@ -58,7 +58,9 @@
 		$square.on('click', decrementSize);
 		$square.on('click', setScore);
 		$square.on('click', incrementScore);
-		this.on('click', decrementScore);
+		$('.game-space').on('click', getClicksOut);
+		$('.game-space').on('click', setScoreDecrement);
+		$('.game-space').on('click', decrementScore);
 		
 
 		function randomPosition() {
@@ -71,7 +73,15 @@
 		var clicks= 0;
 		function getClicks(){
 			clicks ++;
+			console.log(clicks);
 		};
+
+		var clicksOut =0;
+		function getClicksOut (){
+			clicksOut++;
+			clicks=0;
+			console.log(clicksOut);
+		}; 
 
 		function getScore(){
 			var totalScore= parseInt( $score.find('span').text(), 10);
@@ -82,8 +92,17 @@
 
 		function setScore(){
 			if (clicks%2 !=0 && clicks>2){
-				score++
+				score++;
 			};
+		};
+
+		var scoreDecrement = 1;
+
+		function setScoreDecrement(){
+			if(clicksOut%2 ==0 && clicksOut>1){
+				scoreDecrement++;
+			};
+			console.log(scoreDecrement);
 		};
 
 		function incrementScore() {
@@ -92,7 +111,7 @@
 		};
 		function decrementScore(){
 			if (sec >0) {
-				var totalScore= getScore()-1;
+				var totalScore= getScore()-scoreDecrement;
 				$score.find('span').text(totalScore);
 			};
 		};
@@ -124,6 +143,8 @@
 			$square.show();
 			clicks = 0;
 			score= 1;
+			clicksOut =0;
+			scoreDecrement =1;
 			squareWidth = initialSquareWidth;
 			squareHeight = initialSquareHeight;
 
