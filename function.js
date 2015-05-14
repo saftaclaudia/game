@@ -91,9 +91,11 @@
 			$score.find('span').text(totalScore);
 		};
 		function decrementScore(){
-			var totalScore= getScore()-1;
-			$score.find('span').text(totalScore);
-		}
+			if (sec >0) {
+				var totalScore= getScore()-1;
+				$score.find('span').text(totalScore);
+			};
+		};
 		var initialSquareWidth = $square.width();
 		var initialSquareHeight = $square.height();
 		var squareWidth = initialSquareWidth;
