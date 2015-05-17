@@ -9,7 +9,6 @@
 		var highestScore = getHighestScore();
 		var $highestScore = $('<div class="display"> your highest score <span>'+highestScore+'</span></div>');
 		var $maxscoremessage = $('<div class="success message">awesome game </div>');
-	
 
 		this.append($square);
 		this.append($maxscoremessage);
@@ -54,19 +53,30 @@
 
 		$start.on('click', startGame);
 		$square.on('click', gameActions);
-		$square.on('click', getClicks);
 		$square.on('click', decrementSize);
 		$square.on('click', setScore);
-		$square.on('click', incrementScore);
-		$('.game-space').on('click', setScoreDecrement);
-		$('.game-space').on('click', decrementScore);
-		
 
+		$square.click(function(event){
+			event.stopPropagation();
+			getClicks();
+			console.log(clicks);
+		});
+
+		this.on('click', setScoreDecrement);
+		this.on('click',decrementScore);
+		this.on('click', getClicksOut);
+		
 		function randomPosition() {
 			$square.animate({
 				left: Math.floor( Math.random() * maxWidth),
 				top: Math.floor( Math.random()* maxHeight)
 			}, 'slow');
+		};
+
+		var clicksOut =0;
+		function getClicksOut(){
+			clicksOut++;
+			console.log(clicksOut);
 		};
 
 		var clicks= 0;
@@ -79,8 +89,6 @@
 			return totalScore;
 		};
 
-		var score = 1;
-
 		function setScore(){
 			if (clicks%2 !=0 && clicks>2){
 				score++;
@@ -91,28 +99,34 @@
 
 		function setScoreDecrement(){
 
-			if(squareWidth <40 && squareWidth>30){
+			if(squareWidth <= 40 && squareWidth>30){
 				scoreDecrement= 30;
 			};
-			if(squareWidth <30 && squareWidth>20){
+			if(squareWidth <=30 && squareWidth>20){
 				scoreDecrement= 20;
-			}
-			if(squareWidth<20){
+			};
+			if(squareWidth<=20){
 				scoreDecrement= 10;
-			}
-			console.log(scoreDecrement);
+			};
 		};
 
+		var score = 1;
 		function incrementScore() {
 			var totalScore= getScore() +score;
 			$score.find('span').text(totalScore);
 		};
+		
 		function decrementScore(){
 			if (sec >0) {
 				var totalScore= getScore() -scoreDecrement;
 				$score.find('span').text(totalScore);
 			};
+			if(sec> 0 && clicksOut>=0){
+				var totalScore= getScore() -1;
+				$score.find('span').text(totalScore);
+			};
 		};
+
 		var initialSquareWidth = $square.width();
 		var initialSquareHeight = $square.height();
 		var squareWidth = initialSquareWidth;
@@ -140,6 +154,7 @@
 		function startGame() {
 			$square.show();
 			clicks = 0;
+			clicksOut=0;
 			score= 1;
 			scoreDecrement=0;
 			squareWidth = initialSquareWidth;
