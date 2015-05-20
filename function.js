@@ -98,13 +98,13 @@
 		function setScoreDecrement(){
 
 			if(squareWidth <= 40 && squareWidth>30){
-				scoreDecrement= 4;
+				scoreDecrement= 40;
 			};
 			if(squareWidth <=30 && squareWidth>20){
-				scoreDecrement= 3;
+				scoreDecrement= 30;
 			};
 			if(squareWidth<=20){
-				scoreDecrement= 2;
+				scoreDecrement= 20;
 			};
 		};
 
@@ -122,7 +122,7 @@
 				var totalScore = getScore() - 1;
 				$score.find('span').text(totalScore);
 			};
-			if(clicksOut === 3){
+			if(clicksOut === 3 && getScore() >0){
 				var totalScore = 0;
 				$score.find('span').text(totalScore);
 				console.log(totalScore);
