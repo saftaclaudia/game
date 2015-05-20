@@ -1,50 +1,16 @@
 .square{
-	width: 50px;
-	height: 50px;
 	background-color:#6CBFE8;
 	position: absolute;
 }
 .message {
-	background-color:#6CBFE8;
-	position: absolute;
-	font-size: 24px;
+	font-size: 50px;
 	text-align: center;
-}
-
-.message{
-    background-size: 40px 40px;
-    background-image: linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%,
-                        transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%,
-                        transparent 75%, transparent);                                      
-     box-shadow: inset 0 -1px 0 rgba(255,255,255,.4);
-     width: 100%;
-     border: 1px solid;
-     color: #fff;
-     padding: 15px;
-     position: fixed;
-     position: absolute;
-     text-shadow: 0 1px 0 rgba(0,0,0,.5);
-     -webkit-animation: animate-bg 1s linear infinite;
-}
-
-.success{
-     background-color: #61b832;
-     border-color: #55a12c;
-}
-
-@-webkit-keyframes animate-bg {
-    from {
-        background-position: 0 0;
-    }
-    to {
-       background-position: -80px 0;
-    }
+	color:#6CBFE8;
+	padding-top: 30%; 
 }
 
 .game-space{
 	background-color:#0A1115;
-	width: 500px;
-	height: 300px;
 	position: relative;
 }
 .display{
